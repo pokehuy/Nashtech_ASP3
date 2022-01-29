@@ -1,0 +1,20 @@
+@model PersonModel  
+@{
+    ViewData["Title"] = "Oldest Person";
+}
+<h1>@ViewData["Title"]</h1>
+@{
+    var yes = "Yes";
+    var no = "No";
+}
+<h3>First name: @Model.FirstName</h3>  
+<h3>Last name: @Model.LastName</h3>  
+<h3>Gender: @Model.Gender</h3>   
+<h3>Date of birth: @Model.DateOfBirth</h3>   
+<h3>Phone number: @Model.PhoneNumber</h3>   
+<h3>Birthplace: @Model.BirthPlace</h3>   
+<h3>Graduated : @if(Model.IsGraduated == true){
+    @yes;
+}else{
+    @no;
+}</h3>   

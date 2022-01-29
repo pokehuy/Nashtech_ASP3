@@ -1,0 +1,62 @@
+@model List<List<PersonModel>>  
+@{
+    ViewData["Title"] = "3 List";
+}
+<h1>@ViewData["Title"]</h1>
+@{
+    var yes = "Yes";
+    var no = "No";
+}
+<style>
+    table {
+        margin: 10px 10px 10px 10px;
+    }
+    th, td{
+        border: 1px solid black;
+    }
+</style>
+@for (int i = 0; i < Model.Count; i++)
+{
+    @switch (i)
+    {
+        case 0:
+        <h3> List before 2000</h3>;
+        break;
+        case 1:
+        <h3> List in 2000</h3>;
+        break;
+        case 2:
+        <h3> List after 2000</h3>;
+        break;
+        default:
+        break;
+    }
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Birth Place</th>
+            <th>Graduated</th>
+        </tr>
+    @foreach (var item in Model[i])
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.Gender</td>
+            <td>@item.DateOfBirth</td>
+            <td>@item.PhoneNumber</td>
+            <td>@item.BirthPlace</td>
+            <td>@if(item.IsGraduated == true){
+                @yes;
+            }else{
+                @no;
+            }
+            </td>
+        </tr>
+    }
+    </table>
+}
