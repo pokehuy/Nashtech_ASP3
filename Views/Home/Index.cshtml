@@ -1,8 +1,57 @@
-﻿@{
+﻿@model List<PersonModel> 
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> 
+
+<h1>@ViewData["Title"]</h1>
+@{
+    var yes = "Yes";
+    var no = "No";
+}
+<style>
+    table, th, td{
+        border: 1px solid black;
+    }
+</style>
+<p>@Html.ActionLink("Create", "Edit")</p>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Gender</th>
+    <th>Date of Birth</th>
+    <th>Phone Number</th>
+    <th>Birth Place</th>
+    <th>Graduated</th>
+    <th>Action</th>
+  </tr>
+@foreach (var item in Model)
+{
+<tr>
+    <td>@item.Id</td>
+    <td>@item.FirstName</td>
+    <td>@item.LastName</td>
+    <td>@item.Gender</td>
+    <td>@item.DateOfBirth</td>
+    <td>@item.PhoneNumber</td>
+    <td>@item.BirthPlace</td>
+    <td>@if(item.IsGraduated == true){
+        @yes;
+    }else{
+        @no;
+    }
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+    </td>
+</tr>
+}
+</table>

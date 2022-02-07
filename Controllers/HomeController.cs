@@ -7,10 +7,10 @@ namespace asp3.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private List<PersonModel> GetList(){
-        return new List<PersonModel>
+    static List<PersonModel> listPersons = new List<PersonModel>
         {
             new PersonModel{
+                Id = 1,
                 FirstName = "Nguyen",
                 LastName = "Nam Phuong",
                 Gender = "Male",
@@ -20,6 +20,7 @@ public class HomeController : Controller
                 IsGraduated = false
             },
             new PersonModel{
+                Id = 2,
                 FirstName = "Phuong",
                 LastName = "Viet Hoang",
                 Gender = "Male",
@@ -29,6 +30,7 @@ public class HomeController : Controller
                 IsGraduated = false
             },
             new PersonModel{
+                Id = 3,
                 FirstName = "Trinh",
                 LastName = "Hong Nhung",
                 Gender = "Female",
@@ -38,7 +40,7 @@ public class HomeController : Controller
                 IsGraduated = true
             }
         };
-    }
+    
 
     private List<PersonModel> GetMaleMembers(List<PersonModel> listMember){
             var maleMembers = from member in listMember where member.Gender == "Male" select member;
@@ -71,39 +73,69 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        listPersons = listPersons.OrderBy(person => person.Id).ToList();
+        return View(listPersons);
     }
 
     public IActionResult Privacy()
     {
         return View();
     }
+ 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(PersonModel per)
+    {
+            if(per.Id == null) {
+                per.Id = listPersons[listPersons.Count - 1].Id + 1;
+                listPersons.Add(per);
+                return RedirectToAction("Index");
+            } else {
+                var person = listPersons.Where(p => p.Id == per.Id).FirstOrDefault();
+                listPersons.Remove(person);
+                listPersons.Add(per);
+
+                return RedirectToAction("Index");
+            }
+    }
+
+    public IActionResult Delete(int? id){
+        var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
+        listPersons.Remove(person);
+        return RedirectToAction("Index");
+    }
+
+    // http get, -> click edit -> check if person is available to edit (return to edit page with person) or the new one (return nothing)
+    public IActionResult Edit(int? id){
+        var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
+        return View(person);       
+    }
 
     //url: localhost:port/NashTech/Home/MalePersons
     public IActionResult MalePersons()
     {
-        List<PersonModel> listMalePersons = GetMaleMembers(GetList());
+        List<PersonModel> listMalePersons = GetMaleMembers(listPersons);
         return View(listMalePersons);
     }
 
     //url: localhost:port/NashTech/Home/OldestPerson
     public IActionResult OldestPerson()
     {
-        var personModel = GetOldestMember(GetList());
+        var personModel = GetOldestMember(listPersons);
         return View(personModel);
     }
 
     //url: localhost:port/NashTech/Home/FullnamePersons
     public IActionResult FullnamePersons()
     {
-        var listName = GetFullNameList(GetList());
+        var listName = GetFullNameList(listPersons);
         return View(listName);
     }
 
     //url: localhost:port/NashTech/Home/Get3Lists
     public IActionResult Get3Lists()
     {
-        var list3 = List3(GetList());
+        var list3 = List3(listPersons);
         return View(list3);
     }
 
