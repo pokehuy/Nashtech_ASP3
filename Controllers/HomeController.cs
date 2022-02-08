@@ -99,10 +99,15 @@ public class HomeController : Controller
             }
     }
 
-    public IActionResult Delete(int? id){
-        var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
-        listPersons.Remove(person);
-        return RedirectToAction("Index");
+    public IActionResult Delete(bool confirm, int? id){
+        if(confirm == true) {
+            var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
+            listPersons.Remove(person);
+            return RedirectToAction("Index");
+        } else {
+            return RedirectToAction("Index");
+        }
+        
     }
 
     // http get, -> click edit -> check if person is available to edit (return to edit page with person) or the new one (return nothing)
