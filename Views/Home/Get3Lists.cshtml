@@ -7,14 +7,7 @@
     var yes = "Yes";
     var no = "No";
 }
-<style>
-    table {
-        margin: 10px 10px 10px 10px;
-    }
-    th, td{
-        border: 1px solid black;
-    }
-</style>
+
 @for (int i = 0; i < Model.Count; i++)
 {
     @switch (i)
@@ -31,7 +24,7 @@
         default:
         break;
     }
-    <table>
+    <table class="table" style="margin:50px 0px;">
         <tr>
             <th>First Name</th>
             <th>Last Name</th>

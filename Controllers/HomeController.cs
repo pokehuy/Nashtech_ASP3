@@ -82,15 +82,21 @@ public class HomeController : Controller
         return View();
     }
  
+    // http get, -> click edit -> check if person is available to edit (return to edit page with person) or the new one (return nothing)
+    public IActionResult AddOrEdit(int? id){
+        var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
+        return View(person);       
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(PersonModel per)
+    public IActionResult AddOrEdit(PersonModel per)
     {
-            if(per.Id == null) {
-                per.Id = listPersons[listPersons.Count - 1].Id + 1;
+            if(per.Id == null) { // trường hợp Add person 
+                per.Id = listPersons[listPersons.Count - 1].Id + 1; // lấy id của phần tử cuối cùng, cộng thêm 1
                 listPersons.Add(per);
                 return RedirectToAction("Index");
-            } else {
+            } else { // trường hợp edit person
                 var person = listPersons.Where(p => p.Id == per.Id).FirstOrDefault();
                 listPersons.Remove(person);
                 listPersons.Add(per);
@@ -107,13 +113,6 @@ public class HomeController : Controller
         } else {
             return RedirectToAction("Index");
         }
-        
-    }
-
-    // http get, -> click edit -> check if person is available to edit (return to edit page with person) or the new one (return nothing)
-    public IActionResult Edit(int? id){
-        var person = listPersons.Where(person => person.Id == id).FirstOrDefault();
-        return View(person);       
     }
 
     //url: localhost:port/NashTech/Home/MalePersons

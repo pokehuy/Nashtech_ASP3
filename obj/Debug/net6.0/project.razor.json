@@ -16323,8 +16323,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\huy\\Desktop\\coding\\Rookies\\asp3\\Views\\Shared\\Edit.cshtml",
-      "TargetPath": "Views\\Shared\\Edit.cshtml",
+      "FilePath": "c:\\Users\\huy\\Desktop\\coding\\Rookies\\asp3\\Views\\Shared\\AddOrEdit.cshtml",
+      "TargetPath": "Views\\Shared\\AddOrEdit.cshtml",
       "FileKind": "mvc"
     },
     {

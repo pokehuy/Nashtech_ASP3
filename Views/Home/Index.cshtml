@@ -1,54 +1,50 @@
-﻿@model List<PersonModel> 
+﻿@model IEnumerable<asp3.Models.PersonModel> 
 
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> 
 
 <h1>@ViewData["Title"]</h1>
 @{
     var yes = "Yes";
     var no = "No";
 }
-<style>
+@* <style>
     table, th, td{
         border: 1px solid black;
     }
-</style>
-<p>@Html.ActionLink("Create", "Edit")</p>
-<table>
+</style> *@
+
+<p>@Html.ActionLink("Create", "AddOrEdit")</p>
+<table class="table">
   <tr>
-    <th>Id</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Gender</th>
-    <th>Date of Birth</th>
-    <th>Phone Number</th>
-    <th>Birth Place</th>
-    <th>Graduated</th>
+    <th>@Html.DisplayNameFor(model => model.Id)</th>
+    <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+    <th>@Html.DisplayNameFor(model => model.LastName)</th>
+    <th>@Html.DisplayNameFor(model => model.Gender)</th>
+    <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
+    <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+    <th>@Html.DisplayNameFor(model => model.BirthPlace)</th>
+    <th>@Html.DisplayNameFor(model => model.IsGraduated)</th>
     <th>Action</th>
   </tr>
 @foreach (var item in Model)
 {
 <tr>
-    <td>@item.Id</td>
-    <td>@item.FirstName</td>
-    <td>@item.LastName</td>
-    <td>@item.Gender</td>
-    <td>@item.DateOfBirth</td>
-    <td>@item.PhoneNumber</td>
-    <td>@item.BirthPlace</td>
+    <td>@Html.DisplayFor(itemModel => item.Id)</td>
+    <td>@Html.DisplayFor(itemModel => item.FirstName)</td>
+    <td>@Html.DisplayFor(itemModel => item.LastName)</td>
+    <td>@Html.DisplayFor(itemModel => item.Gender)</td>
+    <td>@Html.DisplayFor(itemModel => item.DateOfBirth)</td>
+    <td>@Html.DisplayFor(itemModel => item.PhoneNumber)</td>
+    <td>@Html.DisplayFor(itemModel => item.BirthPlace)</td>
     <td>@if(item.IsGraduated == true){
         @yes;
     }else{
         @no;
     }
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Edit", "AddOrEdit", new { id = item.Id }) |
         @Html.ActionLink("Delete", "Delete", new { confirm = true, id = item.Id }, new { onclick = "return confirm('Do you really want to delete this person?')"})
     </td>
     </td>
